@@ -46,13 +46,17 @@ jobs:
       run: msbuild TidalLib\TidalLib\TidalLib.sln /p:Configuration=Debug
 
     - name: Restore Tidal-GUI
-      run: nuget restore Tidal-Media-Downloader-PRO\TIDALDL-UI-PRO\TIDALDL-UI.sln
+      run: |
+        $sln = Get-ChildItem -Path Tidal-Media-Downloader-PRO -Filter TIDALDL-UI.sln -Recurse | Select-Object -ExpandProperty FullName
+        nuget restore $sln
       
     - name: Build Tidal-GUI
-      run: msbuild Tidal-Media-Downloader-PRO\TIDALDL-UI-PRO\TIDALDL-UI.sln /p:Configuration=Release
+      run: |
+        $sln = Get-ChildItem -Path Tidal-Media-Downloader-PRO -Filter TIDALDL-UI.sln -Recurse | Select-Object -ExpandProperty FullName
+        msbuild $sln /p:Configuration=Release
 
     - name: Upload Build
       uses: actions/upload-artifact@v4
       with:
         name: tidal-gui-app
-        path: Tidal-Media-Downloader-PRO\TIDALDL-UI-PRO\bin\Release\
+        path: Tidal-Media-Downloader-PRO\**\bin\Release\
