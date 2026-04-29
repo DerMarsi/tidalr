@@ -40,10 +40,10 @@ jobs:
       run: msbuild AIGS\AIGS.sln /p:Configuration=Debug
 
     - name: Restore TidalLib
-      run: nuget restore TidalLib\TidalLib.sln
+      run: nuget restore TidalLib\TidalLib\TidalLib.sln
       
     - name: Build TidalLib
-      run: msbuild TidalLib\TidalLib.sln /p:Configuration=Debug
+      run: msbuild TidalLib\TidalLib\TidalLib.sln /p:Configuration=Debug
 
     - name: Restore Tidal-GUI
       run: nuget restore Tidal-Media-Downloader-PRO\TIDALDL-UI-PRO\TIDALDL-UI.sln
