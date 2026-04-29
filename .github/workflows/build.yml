@@ -48,6 +48,12 @@ jobs:
     - name: Restore Tidal-GUI
       run: |
         $sln = Get-ChildItem -Path Tidal-Media-Downloader-PRO -Filter TIDALDL-UI.sln -Recurse | Select-Object -ExpandProperty FullName
+        $slnDir = Split-Path $sln
+        $targetDir = (Resolve-Path (Join-Path $slnDir "..\..\")).Path
+        if ((Resolve-Path -Path "AIGS").Path -ne (Join-Path $targetDir "AIGS")) {
+            Copy-Item -Path AIGS -Destination $targetDir -Recurse -Force
+            Copy-Item -Path TidalLib -Destination $targetDir -Recurse -Force
+        }
         nuget restore $sln
       
     - name: Build Tidal-GUI
